@@ -62,3 +62,5 @@ $db->addServer(array (
   'database' => 'typecho',
 ), Typecho_Db::READ | Typecho_Db::WRITE);
 Typecho_Db::set($db);
+
+define('__TYPECHO_DEBUG__', true);
