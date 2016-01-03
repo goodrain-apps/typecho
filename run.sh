@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 判断并选择是否初始化数据库
-[ ! -e /data/.dbimported ] && php importdb.php ./install/typecho.sql  && touch /data/.dbimported
+[ ! -f /data/.dbimported ] && php importdb.php ./install/createdb.sql  && touch /data/.dbimported
 
 
 # 将需要持久化的目录移动到 /data 目录
