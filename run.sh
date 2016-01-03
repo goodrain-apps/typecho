@@ -4,13 +4,22 @@
 [ ! -f /data/.dbimported ] && php importdb.php ./install/createdb.sql  && touch /data/.dbimported
 
 
-# 将需要持久化的目录移动到 /data 目录
+# 配置 usr 目录到持久化 /data 目录
 if [ ! -d /data/usr ];then
   mv /app/usr /data/
   ln -s /data/usr /app/
 elif [ -d /app/usr ];then
   rm -rf /app/usr
   ln -s /data/user /app/
+fi
+
+# 配置 var 目录到持久化 /data 目录
+if [ ! -d /data/var ];then
+  mv /app/var /data/
+  ln -s /data/var /app/
+elif [ -d /app/var ];then
+  rm -rf /app/var
+  ln -s /data/var /app/
 fi
 
 # 启动web server
