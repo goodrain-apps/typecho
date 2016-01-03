@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # 判断并选择是否初始化数据库
-#[ ! -f /data/.dbimported ] && php importdb.php ./install/createdb.sql  && touch /data/.dbimported
+if [ ! -f /data/.dbimported ];then
+  php importdb.php ./install/createdb.sql  
+  touch /data/.dbimported
+fi
 
 
 # 配置 usr 目录到持久化 /data 目录
