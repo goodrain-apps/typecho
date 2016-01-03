@@ -141,8 +141,10 @@ set_time_limit(0);
 
 $mysqli = new mysqli(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), '',getenv('MYSQL_PORT'));
 $mysqli->set_charset("utf8");
+$sqlfile = $argv[1];
 
 header('Content-Type: text/html;charset=utf-8');
-sqlImport('./install/Mysql.sql');
+
+sqlImport($sqlfile);
 
 echo "Peak MB: ", memory_get_peak_usage(true)/1024/1024;
