@@ -13,7 +13,7 @@ if [ ! -d /data/usr ];then
   ln -s /data/usr /app/
 elif [ -d /app/usr ];then
   rm -rf /app/usr
-  ln -s /data/user /app/
+  ln -s /data/usr /app/
 fi
 
 # 配置 var 目录到持久化 /data 目录
