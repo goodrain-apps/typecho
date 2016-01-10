@@ -100,8 +100,8 @@ class Upgrade
      */
     public static function v0_4r9_1_14($db, $options)
     {
-        if (is_writeable(__TYPECHO_ROOT_DIR__ . '/config.inc.php')) {
-            $handle = fopen(__TYPECHO_ROOT_DIR__ . '/config.inc.php', 'ab');
+        if (is_writeable(__TYPECHO_ROOT_DIR__ . '/var/config.inc.php')) {
+            $handle = fopen(__TYPECHO_ROOT_DIR__ . '/var/config.inc.php', 'ab');
             fwrite($handle, '
 /** 初始化时区 */
 Typecho_Date::setTimezoneOffset($options->timezone);
@@ -525,9 +525,9 @@ Typecho_Date::setTimezoneOffset($options->timezone);
         ->rows(array('name' => 'gzip', 'user' => 0, 'value' => 0)));
 
 
-        if(is_writeable(__TYPECHO_ROOT_DIR__ . '/config.inc.php')) {
+        if(is_writeable(__TYPECHO_ROOT_DIR__ . '/var/config.inc.php')) {
 
-            $contents = file_get_contents(__TYPECHO_ROOT_DIR__ . '/config.inc.php');
+            $contents = file_get_contents(__TYPECHO_ROOT_DIR__ . '/var/config.inc.php');
             $contents = preg_replace("/Typecho_Common::init([^;]+);/is", "Typecho_Common::init(array(
     'autoLoad'          =>  true,
     'exception'         =>  'Widget_ExceptionHandle',
@@ -537,7 +537,7 @@ Typecho_Date::setTimezoneOffset($options->timezone);
             $contents = preg_replace("/\s*(\/[^\/]+\/)?\s*Typecho_Router::setRoutes([^;]+);/is", '', $contents);
             $contents = preg_replace("/\s*(\/[^\/]+\/)?\s*Typecho_Plugin::init([^;]+);/is", '', $contents);
             $contents = preg_replace("/\s*(\/[^\/]+\/)?\s*Typecho_Date::setTimezoneOffset([^;]+);/is", '', $contents);
-            file_put_contents(__TYPECHO_ROOT_DIR__ . '/config.inc.php', $contents);
+            file_put_contents(__TYPECHO_ROOT_DIR__ . '/var/config.inc.php', $contents);
 
         } else {
             /** 升级提示 */

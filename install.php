@@ -56,7 +56,7 @@ ob_start();
 session_start();
 
 //判断是否已经安装
-if (!isset($_GET['finish']) && file_exists(__TYPECHO_ROOT_DIR__ . '/config.inc.php') && empty($_SESSION['typecho'])) {
+if (!isset($_GET['finish']) && file_exists(__TYPECHO_ROOT_DIR__ . '/var/config.inc.php') && empty($_SESSION['typecho'])) {
     exit;
 }
 
@@ -211,7 +211,7 @@ Typecho_Cookie::set('__typecho_lang', $lang);
         <div class="col-mb-12 col-tb-8 col-tb-offset-2">
             <div class="column-14 start-06 typecho-install">
             <?php if (isset($_GET['finish'])) : ?>
-                <?php if (!@file_exists(__TYPECHO_ROOT_DIR__ . '/config.inc.php')) : ?>
+                <?php if (!@file_exists(__TYPECHO_ROOT_DIR__ . '/var/config.inc.php')) : ?>
                 <h1 class="typecho-install-title"><?php _e('安装失败!'); ?></h1>
                 <div class="typecho-install-body">
                     <form method="post" action="?config" name="config">
@@ -271,7 +271,7 @@ Typecho_Cookie::set('__typecho_lang', $lang);
                 </div>
                 <?php endif;?>
             <?php elseif (isset($_GET['start'])): ?>
-                <?php if (!@file_exists(__TYPECHO_ROOT_DIR__ . '/config.inc.php')) : ?>
+                <?php if (!@file_exists(__TYPECHO_ROOT_DIR__ . '/var/config.inc.php')) : ?>
                 <h1 class="typecho-install-title"><?php _e('安装失败!'); ?></h1>
                 <div class="typecho-install-body">
                     <form method="post" action="?config" name="config">
@@ -462,7 +462,7 @@ Typecho_Cookie::set('__typecho_lang', $lang);
                             if ('config' == _r('action')) {
                                 $success = true;
 
-                                if (_r('created') && !file_exists('./config.inc.php')) {
+                                if (_r('created') && !file_exists('./var/config.inc.php')) {
                                     echo '<p class="message error">' . _t('没有检测到您手动创建的配置文件, 请检查后再次创建') . '</p>';
                                     $success = false;
                                 } else {
@@ -549,15 +549,15 @@ Typecho_Db::set(\$db);
 ";
                                     $contents = implode('', $lines);
                                     if (!Typecho_Common::isAppEngine()) {
-                                        @file_put_contents('./config.inc.php', $contents);
+                                        @file_put_contents('./var/config.inc.php', $contents);
                                     }
 
                                     // 创建一个用于标识的临时文件
                                     $_SESSION['typecho'] = 1;
 
-                                    if (!file_exists('./config.inc.php')) {
+                                    if (!file_exists('./var/config.inc.php')) {
                                     ?>
-<div class="message notice"><p><?php _e('安装程序无法自动创建 <strong>config.inc.php</strong> 文件'); ?><br />
+<div class="message notice"><p><?php _e('安装程序无法自动创建 <strong>var/config.inc.php</strong> 文件'); ?><br />
 <?php _e('您可以在网站根目录下手动创建 <strong>config.inc.php</strong> 文件, 并复制如下代码至其中'); ?></p>
 <p><textarea rows="5" onmouseover="this.select();" class="w-100 mono" readonly><?php echo htmlspecialchars($contents); ?></textarea></p>
 <p><button name="created" value="1" type="submit" class="btn primary">创建完毕, 继续安装 &raquo;</button></p></div>
@@ -569,8 +569,8 @@ Typecho_Db::set(\$db);
                                 }
 
                                 // 安装不成功删除配置文件
-                                if($success != true && file_exists(__TYPECHO_ROOT_DIR__ . '/config.inc.php')) {
-                                    unlink(__TYPECHO_ROOT_DIR__ . '/config.inc.php');
+                                if($success != true && file_exists(__TYPECHO_ROOT_DIR__ . '/var/config.inc.php')) {
+                                    unlink(__TYPECHO_ROOT_DIR__ . '/var/config.inc.php');
                                 }
                             }
                         ?>
