@@ -1212,6 +1212,9 @@ class Widget_Archive extends Widget_Abstract_Contents
         /** 设置归档类型 */
         $this->_archiveType = 'search';
 
+        /** 设置归档缩略名 */
+        $this->_archiveSlug = $keywords;
+
         /** 插件接口 */
         $this->pluginHandle()->searchHandle($this, $select);
     }
@@ -1369,7 +1372,7 @@ class Widget_Archive extends Widget_Abstract_Contents
         
         /** 初始化皮肤函数 */
         $functionsFile = $this->_themeDir . 'functions.php';
-        if (!$this->_invokeFromOutside && file_exists($functionsFile)) {
+        if ((!$this->_invokeFromOutside || $this->parameter->type == 404) && file_exists($functionsFile)) {
             require_once $functionsFile;
             if (function_exists('themeInit')) {
                 themeInit($this);

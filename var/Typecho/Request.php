@@ -190,7 +190,7 @@ class Typecho_Request
     /**
      * 检查ua是否合法
      *
-     * @param $agent ua字符串
+     * @param string $agent ua字符串
      * @return boolean
      */
     private function _checkAgent($agent)
@@ -218,11 +218,13 @@ class Typecho_Request
     public static function getUrlPrefix()
     {
         if (empty(self::$_urlPrefix)) {
-            self::$_urlPrefix = (self::isSecure() ? 'https' : 'http') 
-                . '://' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 
-                    ($_SERVER['SERVER_NAME'] . (in_array($_SERVER['SERVER_PORT'], array(80, 443)) 
-                        ? '' : ':' . $_SERVER['SERVER_PORT']))
-                );
+            if (defined('__TYPECHO_URL_PREFIX__')) {
+                self::$_urlPrefix == __TYPECHO_URL_PREFIX__;
+            } else {
+                self::$_urlPrefix = (self::isSecure() ? 'https' : 'http') . '://' 
+                    . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']
+                    . (empty($_SERVER['SERVER_PORT']) || in_array($_SERVER['SERVER_PORT'], array(80, 443)) ? '' : ':' . $_SERVER['SERVER_PORT']));
+            }
         }
 
         return self::$_urlPrefix;
@@ -601,7 +603,7 @@ class Typecho_Request
                 if (function_exists('mb_convert_encoding')) {
                     $pathInfo = mb_convert_encoding($pathInfo, $outputEncoding, $inputEncoding);
                 } else if (function_exists('iconv')) {
-                    $pathInfo = iconv($pathInfoEncoding, $outputEncoding, $pathInfo);
+                    $pathInfo = iconv($inputEncoding, $outputEncoding, $pathInfo);
                 }
             }
         } else {

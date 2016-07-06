@@ -172,7 +172,9 @@ class Widget_Users_Profile extends Widget_Users_Edit implements Widget_Interface
 
         $form->addItem(new Typecho_Widget_Helper_Form_Element_Hidden('do', NULL, 'personal'));
         $form->addItem(new Typecho_Widget_Helper_Form_Element_Hidden('plugin', NULL, $pluginName));
-        $form->addItem(new Typecho_Widget_Helper_Form_Element_Submit(NULL, NULL, _t('保存设置')));
+        $submit = new Typecho_Widget_Helper_Form_Element_Submit('submit', NULL, _t('保存设置'));
+        $submit->input->setAttribute('class', 'btn primary');
+        $form->addItem($submit);
         return $form;
     }
 
@@ -187,13 +189,17 @@ class Widget_Users_Profile extends Widget_Users_Edit implements Widget_Interface
         $this->widget('Widget_Plugins_List@personalPlugins', 'activated=1')->to($plugins);
         while ($plugins->next()) {
             if ($plugins->personalConfig) {
-                echo '<h3>' . $plugins->title . '</h3>';
                 list($pluginFileName, $className) = Typecho_Plugin::portal($plugins->name,
                     $this->options->pluginDir($plugins->name));
 
                 $form = $this->personalForm($plugins->name, $className, $pluginFileName, $group);
                 if ($this->user->pass($group, true)) {
+                    echo '<br><section id="personal-' . $plugins->name . '">';
+                    echo '<h3>' . $plugins->title . '</h3>';
+                    
                     $form->render();
+
+                    echo '</section>';
                 }
             }
         }
