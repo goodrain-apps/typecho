@@ -19,6 +19,9 @@ define('__TYPECHO_THEME_DIR__', '/usr/themes');
 /** 后台路径(相对路径) */
 define('__TYPECHO_ADMIN_DIR__', '/admin/');
 
+/** 定义真实IP获取来源 */
+define('__TYPECHO_IP_SOURCE__', 'HTTP_X_FORWARDED_FOR');
+
 /** 设置包含路径 */
 @set_include_path(get_include_path() . PATH_SEPARATOR .
 __TYPECHO_ROOT_DIR__ . '/var' . PATH_SEPARATOR .
@@ -540,7 +543,7 @@ Typecho_Cookie::set('__typecho_lang', $lang);
                                     }
 
                                     /** 初始化配置文件 */
-                                    $lines = array_slice(file(__FILE__), 0, 52);
+                                    $lines = array_slice(file(__FILE__), 0, 55);
                                     $lines[] = "
 /** 定义数据库参数 */
 \$db = new Typecho_Db('{$adapter}', '" . _r('dbPrefix') . "');
