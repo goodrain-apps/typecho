@@ -139,7 +139,7 @@ function query($sql)
 
 set_time_limit(0);
 
-$mysqli = new mysqli(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), '',getenv('MYSQL_PORT'));
+$mysqli = new mysqli(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASS'), '',getenv('MYSQL_PORT'));
 $mysqli->set_charset("utf8");
 $sqlfile = $argv[1];
 
